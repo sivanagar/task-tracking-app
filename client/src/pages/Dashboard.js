@@ -20,6 +20,19 @@ export default function Dashboard() {
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [newTaskDescription, setNewTaskDescription] = useState("");
 
+  const handleDeleteTask = (id) => {
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+    setTasks(updatedTasks);
+  };
+
+  const handleChangeStatus = (taskId, newStatus) => {
+    setTasks(
+      tasks.map((task) =>
+        task.id === taskId ? { ...task, status: newStatus } : task
+      )
+    );
+  };
+
   const handleAddTask = (e) => {
     e.preventDefault();
     const newTask = {
@@ -72,7 +85,12 @@ export default function Dashboard() {
       </section>
       <section>
         {tasks.map((task) => (
-          <TaskCard key={task.id} task={task} />
+          <TaskCard
+            key={task.id}
+            task={task}
+            handleDeleteTask={handleDeleteTask}
+            handleChangeStatus={handleChangeStatus}
+          />
         ))}
       </section>
     </div>
