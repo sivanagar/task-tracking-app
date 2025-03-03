@@ -1,5 +1,6 @@
 import { React, useState } from "react";
 import TaskCard from "../components/TaskCard";
+import AddTaskForm from "../components/AddTaskForm";
 
 export default function Dashboard() {
   const [tasks, setTasks] = useState([
@@ -17,8 +18,7 @@ export default function Dashboard() {
       status: "pending",
     },
   ]);
-  const [newTaskTitle, setNewTaskTitle] = useState("");
-  const [newTaskDescription, setNewTaskDescription] = useState("");
+  
 
   const handleDeleteTask = (id) => {
     const updatedTasks = tasks.filter((task) => task.id !== id);
@@ -33,56 +33,20 @@ export default function Dashboard() {
     );
   };
 
-  const handleAddTask = (e) => {
-    e.preventDefault();
-    const newTask = {
-      id: tasks.length + 1,
-      title: newTaskTitle,
-      description: newTaskDescription,
-      status: "To-do",
-    };
+  const handleAddTask = (newTask) => {
+    
     setTasks([...tasks, newTask]);
-    setNewTaskTitle("");
-    setNewTaskDescription("");
-    console.log(newTask);
+    
+    console.log("Added Task", newTask);
   };
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold text-stone-800 mb-4">
-        Task Tracking App
-      </h1>
-      <section className="max-w-md mx-auto bg-white rounded-lg shadow p-6 m-3">
-        <form onSubmit={handleAddTask}>
-          <div>
-            <label className="block mb-2 text-stone-700">Title</label>
-            <input
-              type="text"
-              placeholde="task title"
-              value={newTaskTitle}
-              onChange={(e) => setNewTaskTitle(e.target.value)}
-              required
-              className="w-full mb-4 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-200"
-            />
-          </div>
-          <div>
-            <label className="block mb-2 text-stone-700">Description</label>
-            <textarea
-              type="textarea"
-              placeholde="task description"
-              value={newTaskDescription}
-              onChange={(e) => setNewTaskDescription(e.target.value)}
-              className="w-full mb-4 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-200"
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700"
-          >
-            Add Task
-          </button>
-        </form>
-      </section>
+    <div className="container mx-auto px-4">
+      <h2 className="text-xl font-semibold text-stone-800 mb-4">
+        Your Tasks
+      </h2>
+        <AddTaskForm handleAddTask={handleAddTask} key= {tasks.length} id={tasks.length+1}/>
+       
       <section>
         {tasks.map((task) => (
           <TaskCard

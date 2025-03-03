@@ -16,7 +16,8 @@ export default function TaskCard({
     <div className="bg-white rounded-lg shadow p-6 mb-6">
       <h3 className="text-xl font-semibold mb-4">{task.title}</h3>
       <p className="text-base text-stone-700">{task.description}</p>
-      <p>{task.status}</p>
+      <div className="flex justify-between items-center mt-4">
+       <p>{task.status}</p>
       <select
         value={task.status}
         onChange={(e) => handleChange(e.target.value)}
@@ -32,6 +33,7 @@ export default function TaskCard({
       >
         Delete
       </button>
+      </div>
     </div>
   );
 }
