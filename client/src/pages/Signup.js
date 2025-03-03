@@ -1,4 +1,4 @@
-import {React, useState} from 'react'
+import { React, useState } from "react";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -8,9 +8,8 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log
-    ({ email, password, userName });
-  }
+    console.log({ email, password, userName });
+  };
 
   return (
     <div>
@@ -45,11 +44,7 @@ export default function Signup() {
         </div>
         <br />
         <button type="submit">Signup</button>
-      </form> 
-      
-      
-      </div>
-  )
+      </form>
+    </div>
+  );
 }
-
- 
