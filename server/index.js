@@ -1,6 +1,7 @@
-require('dotenv').config();
-const { ApolloServer, gql } = require('apollo-server');
-const mongoose = require('mongoose');
+import "dotenv/config";
+import { typeDefs, resolvers  } from "./schemas/index.js";
+import { ApolloServer } from "apollo-server";
+import mongoose from "mongoose";
 
 
 //  Connect to MongoDB
@@ -9,19 +10,6 @@ mongoose
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.error(err));
 
-// Define your type definitions (schema)
-
-const typeDefs = gql`
-  type Query {
-    hello: String
-  }
-`;
-
-const resolvers = {
-  Query: {
-    hello: () => 'Hello from GraphQL!',
-  },
-};
 
 
 
