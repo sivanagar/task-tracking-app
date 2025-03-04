@@ -1,9 +1,25 @@
 import { User, Task } from "../models/index.js";
-import  bcrypt  from "bcryptjs";
+import {  AuthenticationError } from "apollo-server-express"; 
 import jwt from "jsonwebtoken";
+import auth from "../utils/auth.js";
+
+const { generateToken } = auth;
 
 const resolvers = {
   Query: {
+    getUser: async (parent, args, context) => {
+      const user = await User.find();
+      return user;
+    },
+    getUserById: async (parent, args, context) => {
+      console.log(context)
+      if (!context.user) throw new AuthenticationError("Not logged in");
+      const userData = await User.findById({ _id: context.user._id })
+        .populate("tasks")
+        .select('-__v -password');;
+
+      return userData;
+    },
     getTask: async (parent, args, context) => {
       console.log("getTask resolver");
       return "getTask resolver";
@@ -12,47 +28,39 @@ const resolvers = {
       console.log("getTaskById resolver");
       return "getTaskById resolver";
     },
-    getUser: async (parent, args, context) => {
-      const user = await User.find();
-      return user;
-    },
-    getUserById: async (parent, args, context) => {
-      console.log("getUserById resolver");
-      return "getUserById resolver";
-    },
   },
 
   Mutation: {
-    register: async (parent, args, context) => {
-      console.log("register resolver");
-      const existingUser = await User.findOne({ email: args.email });
+    register: async (parent, {username, email, password}, context) => {
+      const existingUser = await User.findOne({ email: email });
       if (existingUser) {
         throw new Error("User already exists");
       }
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(args.password, salt);
 
-      const user = await User.create({
-        username: args.username,
-        email: args.email,
-        password: hashedPassword,
-      });
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET,{expiresIn: "1d"});
-      return token;
+      const user = await User.create({ username, email, password });
+      const token = generateToken(user);
+      // jwt.sign({ id: user._id }, process.env.JWT_SECRET,{expiresIn: "1d"});
+      return { token, user };
     },
-    login: async (parent, args, context) => {
-      console.log("login resolver");
-      const user = await User.findOne({ email: args.email });
+
+    login: async (parent, { email, password }, context) => {
+      const user = await User.findOne({ email });
+
       if (!user) {
-        throw new Error("Invalid credentials");
+        throw new AuthenticationError("Incorrect credentials");
       }
-      const validPassword = await bcrypt.compare(args.password, user.password);
+
+      const validPassword = await user.isCorrectPassword(password);
+
       if (!validPassword) {
-        throw new Error("Invalid password");
+        throw new AuthenticationError("Incorrect credentials");
       }
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET,{expiresIn: "1d"});
-      return token;
+
+      const token = generateToken(user);
+      // jwt.sign({ id: user._id }, process.env.JWT_SECRET,{expiresIn: "1d"});
+      return { token, user };
     },
+
     addTask: async (parent, args, context) => {
       console.log("addTask resolver");
       return "addTask resolver";

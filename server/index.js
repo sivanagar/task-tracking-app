@@ -2,18 +2,21 @@ import "dotenv/config";
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { typeDefs, resolvers  } from "./schemas/index.js";
-import authenticateToken from "./utils/auth.js";
+import auth from "./utils/auth.js";
 import db from "./config/connection.js";
+
 const PORT = process.env.PORT || 3001;
 
 // const path = require('path');
 const app = express();
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 const startServer = async () => {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: authenticateToken,
+    context: auth.authenticateToken,
   });
   await server.start();
   server.applyMiddleware({ app: app });
@@ -22,8 +25,6 @@ const startServer = async () => {
 
 startServer();
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 
 // Create an instance of ApolloServer
 // const server = new ApolloServer({ typeDefs, resolvers, context: authenticateToken });

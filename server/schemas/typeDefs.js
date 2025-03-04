@@ -6,9 +6,8 @@ const typeDefs = gql`
     _id: ID
     username: String
     email: String
-    password: String
-    createdAt: String
   }
+
   type Task {
     _id: ID
     title: String
@@ -18,19 +17,21 @@ const typeDefs = gql`
     createdAt: String
     updatedAt: String
   }
+  type Auth {
+    token: ID!
+    user: User
+  }
 
   type Query {
+    getUser: [User]
+    getUserById: User
     getTask: [Task]
     getTaskById(_id: ID!): Task
-    getUser: [User]
-    getUserById(_id: ID!): User
-
-    hello: String
   }
-    
+
   type Mutation {
-    register(username: String!, email: String!, password: String!): User
-    login(email: String!, password: String!): String
+    register(username: String!, email: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
     addTask(title: String!, description: String): Task
     updateTask(
       _id: ID!
