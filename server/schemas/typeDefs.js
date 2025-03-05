@@ -9,13 +9,12 @@ const typeDefs = gql`
   }
 
   type Task {
-    _id: ID
-    title: String
+    _id: ID!
+    title: String!
     description: String
     status: String
-    userId: ID
-    createdAt: String
-    updatedAt: String
+    userId: ID!
+    
   }
   type Auth {
     token: ID!
@@ -25,7 +24,7 @@ const typeDefs = gql`
   type Query {
     getUser: [User]
     getUserById: User
-    getTask: [Task]
+    getTasks: [Task]
     getTaskById(_id: ID!): Task
   }
 
@@ -37,7 +36,7 @@ const typeDefs = gql`
       _id: ID!
       title: String
       description: String
-      status: String!
+      status: String
     ): Task
     deleteTask(_id: ID!): Boolean
   }

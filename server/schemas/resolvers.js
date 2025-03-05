@@ -1,6 +1,5 @@
 import { User, Task } from "../models/index.js";
-import {  AuthenticationError } from "apollo-server-express"; 
-import jwt from "jsonwebtoken";
+import { AuthenticationError } from "apollo-server-express";
 import auth from "../utils/auth.js";
 
 const { generateToken } = auth;
@@ -12,26 +11,29 @@ const resolvers = {
       return user;
     },
     getUserById: async (parent, args, context) => {
-      console.log(context)
       if (!context.user) throw new AuthenticationError("Not logged in");
       const userData = await User.findById({ _id: context.user._id })
         .populate("tasks")
-        .select('-__v -password');;
+        .select("-__v -password");
 
       return userData;
     },
-    getTask: async (parent, args, context) => {
+    getTasks: async (parent, args, context) => {
       console.log("getTask resolver");
-      return "getTask resolver";
+      if (!context.user) throw new AuthenticationError("Not logged in");
+      const tasks = await Task.find({ userId: context.user._id });
+
+      return tasks;
     },
-    getTaskById: async (parent, args, context) => {
-      console.log("getTaskById resolver");
-      return "getTaskById resolver";
+    getTaskById: async (parent, { _id }, context) => {
+      if (!context.user) throw new AuthenticationError("Not logged in");
+      const task = await Task.findById({ _id: _id });
+      return task;
     },
   },
 
   Mutation: {
-    register: async (parent, {username, email, password}, context) => {
+    register: async (parent, { username, email, password }, context) => {
       const existingUser = await User.findOne({ email: email });
       if (existingUser) {
         throw new Error("User already exists");
@@ -61,17 +63,46 @@ const resolvers = {
       return { token, user };
     },
 
-    addTask: async (parent, args, context) => {
+    addTask: async (parent, { title, description }, context) => {
       console.log("addTask resolver");
-      return "addTask resolver";
+      if (!context.user) throw new AuthenticationError("Not logged in");
+      const newTask = await Task.create({
+        title,
+        description,
+        userId: context.user._id,
+      });
+      return newTask;
     },
-    updateTask: async (parent, args, context) => {
-      console.log("updateTask resolver");
-      return "updateTask resolver";
+
+    updateTask: async (
+      parent,
+      {_id, title, description, status },
+      context
+    ) => {
+      if (!context.user) throw new AuthenticationError("Not auythenticated");
+      const updatedTask = await Task.findOneAndUpdate(
+        { _id: _id , userId: context.user._id },
+        { title, description, status },
+        {
+          new: true,
+          // runValidators: true,
+        }
+      );
+      if (!updatedTask) {
+        throw new Error("Task not found!");
+      }
+      return updatedTask;
     },
+
     deleteTask: async (parent, args, context) => {
       console.log("deleteTask resolver");
-      return "deleteTask resolver";
+      if (!context.user) throw new AuthenticationError("Not authenticated");
+      const deletedTask = await Task.findOneAndDelete({ _id: args._id , userId: context.user._id });
+      if (!deletedTask) {
+        throw new Error("Task not found!");
+      }
+
+      return true;
     },
   },
 };
