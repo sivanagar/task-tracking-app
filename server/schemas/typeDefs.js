@@ -6,6 +6,7 @@ const typeDefs = gql`
     _id: ID
     username: String
     email: String
+    tasks: [Task]
   }
 
   type Task {
@@ -14,14 +15,15 @@ const typeDefs = gql`
     description: String
     status: String
     userId: ID!
-    
   }
+
   type Auth {
     token: ID!
     user: User
   }
 
   type Query {
+    me: User
     getUser: [User]
     getUserById: User
     getTasks: [Task]

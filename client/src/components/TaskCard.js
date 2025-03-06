@@ -6,7 +6,7 @@ export default function TaskCard({
   handleChangeStatus,
 }) {
   const handleDeleteButtonClick = () => {
-    handleDeleteTask(task.id);
+    handleDeleteTask(task._id);
   };
   const handleChange = (newStatus) => {
     handleChangeStatus(task.id, newStatus);

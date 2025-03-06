@@ -6,6 +6,13 @@ const { generateToken } = auth;
 
 const resolvers = {
   Query: {
+    me: async (parent, args, context) => {
+      if (!context.user) throw new AuthenticationError("Not logged in");
+      const userData = await User.findById({ _id: context.user._id })
+        .populate("tasks")
+        .select("-__v -password");
+      return userData;
+    },
     getUser: async (parent, args, context) => {
       const user = await User.find();
       return user;
@@ -46,6 +53,7 @@ const resolvers = {
     },
 
     login: async (parent, { email, password }, context) => {
+      console.log("login resolver");
       const user = await User.findOne({ email });
 
       if (!user) {
@@ -57,8 +65,9 @@ const resolvers = {
       if (!validPassword) {
         throw new AuthenticationError("Incorrect credentials");
       }
-
+      console.log("user", user);
       const token = generateToken(user);
+      console.log("token", token);
       // jwt.sign({ id: user._id }, process.env.JWT_SECRET,{expiresIn: "1d"});
       return { token, user };
     },
@@ -71,17 +80,23 @@ const resolvers = {
         description,
         userId: context.user._id,
       });
+
+      const user = await User.findByIdAndUpdate(
+        { _id: context.user._id },
+        { $push: { tasks: newTask._id } },
+        { new: true }
+      );
       return newTask;
     },
 
     updateTask: async (
       parent,
-      {_id, title, description, status },
+      { _id, title, description, status },
       context
     ) => {
       if (!context.user) throw new AuthenticationError("Not auythenticated");
       const updatedTask = await Task.findOneAndUpdate(
-        { _id: _id , userId: context.user._id },
+        { _id: _id, userId: context.user._id },
         { title, description, status },
         {
           new: true,
@@ -97,7 +112,10 @@ const resolvers = {
     deleteTask: async (parent, args, context) => {
       console.log("deleteTask resolver");
       if (!context.user) throw new AuthenticationError("Not authenticated");
-      const deletedTask = await Task.findOneAndDelete({ _id: args._id , userId: context.user._id });
+      const deletedTask = await Task.findOneAndDelete({
+        _id: args._id,
+        userId: context.user._id,
+      });
       if (!deletedTask) {
         throw new Error("Task not found!");
       }
