@@ -9,7 +9,7 @@ export default function TaskCard({
     handleDeleteTask(task._id);
   };
   const handleChange = (newStatus) => {
-    handleChangeStatus(task.id, newStatus);
+    handleChangeStatus(task._id, newStatus);
   };
 
   return (

@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
-import { ADD_TASK, DELETE_TASK } from "../utils/mutations";
+import { ADD_TASK, DELETE_TASK, EDIT_TASK } from "../utils/mutations";
 import { QUERY_ME } from "../utils/queries";
 
 import TaskCard from "../components/TaskCard";
@@ -19,6 +19,7 @@ export default function Dashboard() {
 
   const [addTask, { error }] = useMutation(ADD_TASK);
   const [deleteTask, { error: deleteError }] = useMutation(DELETE_TASK);
+  const [editTask, { error: editError }] = useMutation(EDIT_TASK);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -27,23 +28,34 @@ export default function Dashboard() {
 
   const handleDeleteTask = async (id) => {
     const updatedTasks = tasks.filter((task) => task._id !== id);
-    try { 
-      const data  = await deleteTask({ variables: { id } });
+    try {
+      const data = await deleteTask({ variables: { id } });
       if (!data) {
         throw new Error("Something went wrong!");
       }
       setTasks(updatedTasks);
+    } catch (err) {
+      console.error(err);
     }
-    catch (err) {
+  };
+
+  const handleChangeStatus = async (taskId, newStatus) => {
+    console.log("handleChangeStatus", taskId, newStatus);
+    try {
+      const  editedTask  = await editTask({
+        variables: { id: taskId, status: newStatus },
+      });
+
+      if (!editedTask) {
+        throw new Error("Something went wrong!");
+      }
+    } catch (err) {
       console.error(err);
     }
 
-  };
-
-  const handleChangeStatus = (taskId, newStatus) => {
     setTasks(
       tasks.map((task) =>
-        task.id === taskId ? { ...task, status: newStatus } : task
+        task._id === taskId ? { ...task, status: newStatus } : task
       )
     );
   };
@@ -54,7 +66,6 @@ export default function Dashboard() {
         variables: { ...newTask },
       });
       if (data?.addTask) {
-        console.log(data.addTask);
         setTasks([...tasks, data.addTask]);
       }
     } catch (err) {

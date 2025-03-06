@@ -1,4 +1,6 @@
+import { useMutation } from "@apollo/client";
 import {React, useState} from "react";
+
 
 export default function AddTaskForm({ handleAddTask, id }) {
   const [newTaskTitle, setNewTaskTitle] = useState("");
@@ -15,7 +17,6 @@ export default function AddTaskForm({ handleAddTask, id }) {
     handleAddTask(newTask);
     setNewTaskTitle("");
     setNewTaskDescription("");
-    console.log(newTask);
   };
 
   return (

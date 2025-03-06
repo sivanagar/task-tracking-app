@@ -46,14 +46,14 @@ export const ADD_TASK = gql`
 `;
 
 export const EDIT_TASK = gql`
-  mutation EditTask(
+  mutation updateTask(
     $id: ID!
     $title: String
     $description: String
     $status: String
   ) {
-    editTask(
-      id: $id
+    updateTask(
+      _id: $id
       title: $title
       description: $description
       status: $status
