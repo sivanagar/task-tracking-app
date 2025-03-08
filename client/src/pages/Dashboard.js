@@ -75,7 +75,8 @@ export default function Dashboard() {
 
   return (
     <div className="container mx-auto px-4">
-      <h2 className="text-xl font-semibold text-stone-800 mb-4">Your Tasks</h2>
+      <h2 className="font-heading text-2xl font-bold text-stone-800 mb-4">Your Tasks</h2>
+      <p className="font-body text-base">Add your daily tasks easily!</p>
       <AddTaskForm
         handleAddTask={handleAddTask}
         key={tasks.length}
@@ -84,7 +85,7 @@ export default function Dashboard() {
 
       <section>
         {!user?.username && (
-          <h4>
+          <h4 className="font-body text-base">
             You need to be logged in to see this. Use the navigation links above
             to sign up or log in!
           </h4>

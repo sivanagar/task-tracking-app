@@ -2,6 +2,8 @@ import { useMutation } from "@apollo/client";
 import { React, useState } from "react";
 import { LOGIN_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
+import { Lock } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -26,41 +28,55 @@ export default function Login() {
     } catch (err) {
       console.error(err);
     }
-   
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white rounded-lg shadow p-6">
-      <h2 className="text-xl font-semibold text-stone-800 mb-4">Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label className="block mb-2 text-stone-700">Email</label>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full mb-4 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-200"
-          />
-        </div>
-        <div>
-          <label className="block mb-2 text-stone-700">Password</label>
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full mb-4 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-200"
-          />
-        </div>
-        <br />
-        <button
-          type="submit"
-          className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700"
-        >
-          Sign In
-        </button>
-      </form>
+    <div className="min-w-full">
+      <div className="max-w-md mx-auto bg-white shadow-lg rounded-2xlw-full p-8">
+       <h2 className="font-heading text-2xl text-taupe-600 mb-6 flex items-center justify-center gap-2">
+         <Lock className="text-melon" /> Login </h2>
+      
+        {/* <h2 className="font-heading text-2xl text-taupe-600 mb-6 flex items-center justify-center gap-2">
+          <Lock className="text-melon" /> Login{" "}
+        </h2> */}
+        <form onSubmit={handleSubmit}>
+          <div>
+            <input
+              className="w-full mb-4 px-4 py-2 rounded-md border border-silver-300 bg-isabelline-DEFAULT text-charcoal focus:outline-none focus:border-melon transition"
+              placeholder="Email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div>
+            <input
+              type="password"
+              className="w-full mb-6 px-4 py-2 rounded-md border border-silver-300 bg-isabelline-DEFAULT text-charcoal focus:outline-none focus:border-melon transition"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <br />
+          <button
+            type="submit"
+            className="w-full bg-melon text-isabelline py-2 rounded-lg font-heading hover:bg-amber-700 transition duration-300 ease-in-out"
+          >
+            Sign In
+          </button>
+          <div className="text-center text-softgray mt-4">
+            Don't have an account?{" "}
+            <span className="text-melon cursor-pointer">
+              <Link to="/signup">
+              Signup
+              </Link>
+              </span>
+          </div>
+        </form>
+      </div>
+     
     </div>
+
   );
 }

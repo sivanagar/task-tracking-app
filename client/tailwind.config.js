@@ -6,39 +6,21 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        heading: ["Quicksand", "sans-serif"],
+        body: ["Lato", "sans-serif"],
+      },
       // 1. Custom Colors
       colors: {
-        brandGreen: {
-          50:  "#f4faf7",
-          100: "#e8f5ee",
-          200: "#c7e9d8",
-          300: "#a3dcc0",
-          400: "#6ec099",
-          500: "#3da674", // primary shade
-          600: "#2f805b",
-          700: "#205b42",
-          800: "#153b2b",
-          900: "#0b1e17",
-        },
-        brandStone: {
-          50:  "#f9f9f7",
-          100: "#f2f2ef",
-          200: "#dbdbd7",
-          300: "#c4c4bf",
-          400: "#9a9a93",
-          500: "#71716a", // used for text or subtle backgrounds
-          600: "#5c5c55",
-          700: "#3e3e3a",
-          800: "#282824",
-          900: "#141412",
-        },
-      },
+         'taupe': { DEFAULT: '#463f3a', 100: '#0e0d0c', 200: '#1c1917', 300: '#2a2623', 400: '#38322e', 500: '#463f3a', 600: '#6f645d', 700: '#978b82', 800: '#b9b1ac', 900: '#dcd8d5' }, 'battleship_gray': { DEFAULT: '#8a817c', 100: '#1c1a18', 200: '#373331', 300: '#534d49', 400: '#6e6662', 500: '#8a817c', 600: '#a19995', 700: '#b9b3b0', 800: '#d0ccca', 900: '#e8e6e5' }, 'silver': { DEFAULT: '#bcb8b1', 100: '#282622', 200: '#4f4b44', 300: '#777165', 400: '#9c958a', 500: '#bcb8b1', 600: '#cac7c1', 700: '#d8d5d1', 800: '#e5e3e0', 900: '#f2f1f0' }, 'isabelline': { DEFAULT: '#f4f3ee', 100: '#3b3726', 200: '#756e4d', 300: '#a8a17a', 400: '#cfcab5', 500: '#f4f3ee', 600: '#f7f6f3', 700: '#f9f8f6', 800: '#fbfbf9', 900: '#fdfdfc' }, 'melon': { DEFAULT: '#e0afa0', 100: '#3a1c13', 200: '#743825', 300: '#ad5438', 400: '#cd7d65', 500: '#e0afa0', 600: '#e6beb2', 700: '#eccec5', 800: '#f3dfd8', 900: '#f9efec' } 
 
-      // 2. Custom Fonts
-      // (In practice, you’d also import these fonts in your CSS or index.html)
-      fontFamily: {
-        sans: ['Inter', 'sans-serif'],    // overrides default Tailwind sans
-        headings: ['Poppins', 'sans-serif'],
+        ,leaf: '#77B28C',
+        sunlight: '#F4E3B2',
+        cream: '#F9F7F3',
+        terracotta: '#D67D3E',
+        softblue: '#7FB3D5',
+        charcoal: '#333333',
+        softgray: '#9CA3AF',
       },
 
       // 3. Spacing & Sizing

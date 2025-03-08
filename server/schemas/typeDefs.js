@@ -11,10 +11,10 @@ const typeDefs = gql`
 
   type Task {
     _id: ID!
-    title: String!
+    title: String
     description: String
     status: String
-    userId: ID!
+    userId: ID
   }
 
   type Auth {
