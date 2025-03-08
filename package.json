@@ -1,0 +1,27 @@
+{
+  "name": "task-tracking",
+  "version": "1.0.0",
+  "description": "A simple, beautiful, and responsive application for creating, organizing, and tracking tasks. Built using **React**, **Tailwind CSS**, and **GraphQL** (Apollo Client).",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/index.js",
+    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
+    "install": "cd server && npm i && cd ../client && npm i",
+   
+    "build": "cd client && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sivanagar/task-tracking-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sivanagar/task-tracking-app/issues"
+  },
+  "homepage": "https://github.com/sivanagar/task-tracking-app#readme",
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

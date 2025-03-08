@@ -98,7 +98,7 @@ export default function Dashboard() {
         ) : user?.username ? (<>
          {(error || deleteError || editError) && (
   <p className="mt-2 text-sm text-red-600 bg-red-100 border border-red-400 p-2 rounded-md">
-    ⚠️ Action failed: {error.message} {deleteError.message} {editError.message}
+    ⚠️ Action failed
   </p>
 )}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
