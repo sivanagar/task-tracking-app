@@ -1,6 +1,6 @@
 import React from "react";
-import { CheckCircle } from "lucide-react";
-
+import { CheckCircle, Trash2 } from "lucide-react";
+import { motion } from "framer-motion";
 export default function TaskCard({
   task,
   handleDeleteTask,
@@ -14,35 +14,50 @@ export default function TaskCard({
   };
 
   return (
-    <div className="bg-white font-body rounded-lg shadow p-6 mb-6">
-      <div className="flex gap-2 items-center justify-between">
-        <h3 className="font-heading text-xl font-semibold mb-4 flex items-center gap-2">
-          <CheckCircle className="text-silver-900" />
-          {task.title}
-        </h3>
-        <div className="flex justify-between items-center mb-4">
-          <p>{task.status}</p>
-          <select
-            value={task.status}
-            onChange={(e) => handleChange(e.target.value)}
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.2 }}
+      className={`p-5 rounded-xl shadow-md bg-white hover:shadow-lg transition-shadow duration-200 ease-in-out border-l-4 ${
+        task.status === "completed" ? "border-leaf" : "border-melon"
+      }`}
+    >
+      <div className="flex justify-between items-center">
+        <div className="flex items-center gap-3">
+          <motion.button whileHover={{ scale: 1.5 }} className=" px-4 py-2 ">
+            <button
+              onClick={() =>
+                handleChange(
+                  task.status === "completed" ? "pending" : "completed"
+                )
+              }
+              className={`cursor-pointer ${
+                task.status === "completed" ? "text-leaf" : "text-softgray"
+              } hover:text-leaf transition-colors`}
+            >
+              <CheckCircle />
+            </button>
+          </motion.button>
+          <span
+            className={`font-body text-charcoal ${
+              task.status === "completed" ? "line-through text-softgray" : ""
+            }`}
           >
-            <option value="To Do">To Do</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Completed">Completed</option>
-          </select>
+            {task.title}
+          </span>
         </div>
-        </div>
-        <div>
-          <p className="text-base text-stone-700">{task.description}</p>
-        </div>
-
         <button
           onClick={() => handleDeleteButtonClick()}
-          className="bg-red-500 text-white py-1 px-2 rounded mt-2"
+          className="text-softgray hover:text-terracotta transition-colors duration-200"
         >
-          Delete
+          <Trash2 />
         </button>
-      
-    </div>
+      </div>
+      <div className="px-4 py-2">
+        {task.description && (
+          <p className="text-sm text-softgray mt-1">{task.description}</p>
+        )}
+      </div>
+    </motion.div>
   );
 }

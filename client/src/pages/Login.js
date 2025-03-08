@@ -31,14 +31,12 @@ export default function Login() {
   };
 
   return (
-    <div className="min-w-full">
+    <div className="min-w-full min-h-3/4">
       <div className="max-w-md mx-auto bg-white shadow-lg rounded-2xlw-full p-8">
        <h2 className="font-heading text-2xl text-taupe-600 mb-6 flex items-center justify-center gap-2">
          <Lock className="text-melon" /> Login </h2>
       
-        {/* <h2 className="font-heading text-2xl text-taupe-600 mb-6 flex items-center justify-center gap-2">
-          <Lock className="text-melon" /> Login{" "}
-        </h2> */}
+      
         <form onSubmit={handleSubmit}>
           <div>
             <input

@@ -6,27 +6,27 @@ class AuthService
 {
     //get token
     // Retrieves the user token from localStorage
-    get token()
+    getToken()
     {
         return localStorage.getItem("id_token");
     }
 
-    // loggedIn() {
-    //     // Checks if there is a saved token and it's still valid
-    //     const token = this.getToken();
-    //     return !!token && !this.isTokenExpired(token); // handwaiving here
-    //   }
+    loggedIn() {
+        // Checks if there is a saved token and it's still valid
+        const token = this.getToken();
+        return !!token && !this.isTokenExpired(token); // handwaiving here
+      }
     
-    // isTokenExpired(token) {
-    //     try {
-    //       const decoded = decode(token);
-    //       if (decoded.exp < Date.now() / 1000) {
-    //         return true;
-    //       } else return false;
-    //     } catch (err) {
-    //       return false;
-    //     }
-    //   }
+    isTokenExpired(token) {
+        try {
+          const decoded = jwtDecode(token);
+          if (decoded.exp < Date.now() / 1000) {
+            return true;
+          } else return false;
+        } catch (err) {
+          return false;
+        }
+      }
     
 
     //get user data
