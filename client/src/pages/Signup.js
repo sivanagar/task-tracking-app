@@ -14,13 +14,14 @@ export default function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ email, password, username });
     try {
       const { data } = await register({
         variables: { email, password, username },
       });
-      console.log(data);
       Auth.login(data.register.token);
+      //navigate to dashboard
+      window.location.href = "/dashboard";
+
     } catch (err) {
       console.error(err);
     }

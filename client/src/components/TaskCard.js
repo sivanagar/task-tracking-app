@@ -23,8 +23,8 @@ export default function TaskCard({
       }`}
     >
       <div className="flex justify-between items-center">
-        <div className="flex items-center gap-3">
-          <motion.button whileHover={{ scale: 1.5 }} className=" px-4 py-2 ">
+        <div className="flex items-center ">
+          <motion.button whileHover={{ scale: 1.5 }} className=" px-2 py-2 ">
             <button
               onClick={() =>
                 handleChange(
@@ -39,7 +39,7 @@ export default function TaskCard({
             </button>
           </motion.button>
           <span
-            className={`font-body text-charcoal ${
+            className={`font-body text-charcoal py-2 ${
               task.status === "completed" ? "line-through text-softgray" : ""
             }`}
           >

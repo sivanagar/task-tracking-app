@@ -12,7 +12,6 @@ export default function Login() {
   const [loginUser, { error }] = useMutation(LOGIN_USER);
 
   const handleSubmit = async (e) => {
-    console.log("login");
     e.preventDefault();
     if (!email || !password) {
       console.log("Email and password are required");
@@ -23,8 +22,9 @@ export default function Login() {
       const { data } = await loginUser({
         variables: { email, password },
       });
-      console.log(data);
       Auth.login(data.login.token);
+      window.location.href = "/dashboard";
+
     } catch (err) {
       console.error(err);
     }

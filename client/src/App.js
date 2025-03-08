@@ -39,7 +39,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <header className="container mx-auto py-4">
+        <header className=" mx-auto">
           <NavBar />
         </header>
 
@@ -54,7 +54,7 @@ function App() {
               <Route element={<h1>Not Found</h1>} />
             </Routes>
           </main>
-          <footer className="container mx-auto py-4">
+          <footer >
             <Footer />
           </footer>
         </div>

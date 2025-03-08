@@ -5,6 +5,7 @@ import { QUERY_ME } from "../utils/queries";
 
 import TaskCard from "../components/TaskCard";
 import AddTaskForm from "../components/AddTaskForm";
+import TaskFormModal from "../components/TaskFormModal";
 
 import { ClipboardCheck, Plus, PlusCircle } from "lucide-react";
 
@@ -79,23 +80,23 @@ export default function Dashboard() {
     <div className="container min-h-screen px-6 py-8 md:px-12 lg:px-20">
       <header className="mb-8 flex items-center justify-between">
         <h2 className="font-heading text-3xl font-semibold text-taupe flex items-center gap-2">
-          <ClipboardCheck className="text-melon" /> Your Tasks
+          <ClipboardCheck className="text-melon" /> My Tasks
         </h2>
-        <button className="flex items-center gap-2 bg-melon text-isabelline px-4 py-2 rounded-xl hover:bg-amber-700 transition ease-in-out duration-300">
+       
+        {/* <button className="flex items-center gap-2 bg-melon text-isabelline px-4 py-2 rounded-xl hover:bg-amber-700 transition ease-in-out duration-300">
           <Plus className="w-5 h-5" /> New Task
-        </button>
+        </button> */}
       </header>
-      <p className="font-body text-base">Add your daily tasks easily!</p>
-      <AddTaskForm
+      {/* <AddTaskForm
         handleAddTask={handleAddTask}
         key={tasks.length}
         id={tasks.length + 1}
-      />
+      /> */}
 
       <section>
         {loading ? (
           <div className="text-softgray font-body">Loading tasks...</div>
-        ) : user?.username ? (
+        ) : user?.username ? (<>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
             {tasks.map((task) => (
               <TaskCard
@@ -106,15 +107,16 @@ export default function Dashboard() {
               />
             ))}
           </div>
+          <TaskFormModal handleAddTask={handleAddTask} />
+        </>
+          
         ) : (
           <div className="mt-6 font-body text-softgray">
             You need to be logged in to see this. Use the navigation links above
             to sign up or log in!
           </div>
         )}
-        <button className="fixed bottom-8 right-8 bg-melon text-isabelline p-3 rounded-full shadow-lg hover:bg-terracotta transition ease-in-out duration-300">
-          <PlusCircle />
-        </button>
+      
       </section>
     </div>
   );
