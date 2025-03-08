@@ -10,7 +10,7 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [username, setusername] = useState("");
 
-  const [register] = useMutation(REGISTER);
+  const [register, {error}] = useMutation(REGISTER);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,6 +40,7 @@ export default function Signup() {
               type="email"
               placeholder="Email"
               value={email}
+              required
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
@@ -48,6 +49,8 @@ export default function Signup() {
               type="text"
               placeholder="Username"
               value={username}
+              required
+              minLength={6}
               autoComplete="username"
               onChange={(e) => setusername(e.target.value)}
               className="w-full mb-4 px-4 py-2 rounded-md border border-silver-300 bg-isabelline-DEFAULT text-charcoal focus:outline-none focus:border-melon transition"
@@ -60,9 +63,16 @@ export default function Signup() {
               placeholder="Password"
               value={password}
               autoComplete="new-password"
+              required
+              minLength={6}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          {error && (
+  <p className="mt-2 text-sm text-red-600 bg-red-100 border border-red-400 p-2 rounded-md">
+    ⚠️ Signup failed: {error.message}
+  </p>
+)}
           <br />
           <button
             type="submit"

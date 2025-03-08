@@ -25,7 +25,7 @@ export default function TaskCard({
       <div className="flex justify-between items-center">
         <div className="flex items-center ">
           <motion.button whileHover={{ scale: 1.5 }} className=" px-2 py-2 ">
-            <button
+            <div
               onClick={() =>
                 handleChange(
                   task.status === "completed" ? "pending" : "completed"
@@ -36,7 +36,7 @@ export default function TaskCard({
               } hover:text-leaf transition-colors`}
             >
               <CheckCircle />
-            </button>
+            </div>
           </motion.button>
           <span
             className={`font-body text-charcoal py-2 ${

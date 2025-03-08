@@ -11,6 +11,7 @@ export default function Login() {
 
   const [loginUser, { error }] = useMutation(LOGIN_USER);
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
@@ -23,8 +24,6 @@ export default function Login() {
         variables: { email, password },
       });
       Auth.login(data.login.token);
-      window.location.href = "/dashboard";
-
     } catch (err) {
       console.error(err);
     }
@@ -33,16 +32,17 @@ export default function Login() {
   return (
     <div className="min-w-full min-h-3/4">
       <div className="max-w-md mx-auto bg-white shadow-lg rounded-2xlw-full p-8">
-       <h2 className="font-heading text-2xl text-taupe-600 mb-6 flex items-center justify-center gap-2">
-         <Lock className="text-melon" /> Login </h2>
-      
-      
-        <form onSubmit={handleSubmit}>
+        <h2 className="font-heading text-2xl text-taupe-600 mb-6 flex items-center justify-center gap-2">
+          <Lock className="text-melon" /> Login{" "}
+        </h2>
+
+        <form id="login" onSubmit={handleSubmit}>
           <div>
             <input
               className="w-full mb-4 px-4 py-2 rounded-md border border-silver-300 bg-isabelline-DEFAULT text-charcoal focus:outline-none focus:border-melon transition"
               placeholder="Email"
               type="email"
+              autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -52,10 +52,19 @@ export default function Login() {
               type="password"
               className="w-full mb-6 px-4 py-2 rounded-md border border-silver-300 bg-isabelline-DEFAULT text-charcoal focus:outline-none focus:border-melon transition"
               placeholder="Password"
+              autoComplete="current-password"
               value={password}
+              required
+              minLength={6}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          {error && (
+            <p className="mt-2 text-sm text-red-600 bg-red-100 border border-red-400 p-2 rounded-md">
+              ⚠️ Login failed: {error.message}
+            </p>
+          )}
+
           <br />
           <button
             type="submit"
@@ -66,15 +75,11 @@ export default function Login() {
           <div className="text-center text-softgray mt-4">
             Don't have an account?{" "}
             <span className="text-melon cursor-pointer">
-              <Link to="/signup">
-              Signup
-              </Link>
-              </span>
+              <Link to="/signup">Signup</Link>
+            </span>
           </div>
         </form>
       </div>
-     
     </div>
-
   );
 }

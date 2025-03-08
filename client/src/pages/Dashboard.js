@@ -4,10 +4,10 @@ import { ADD_TASK, DELETE_TASK, EDIT_TASK } from "../utils/mutations";
 import { QUERY_ME } from "../utils/queries";
 
 import TaskCard from "../components/TaskCard";
-import AddTaskForm from "../components/AddTaskForm";
+// import AddTaskForm from "../components/AddTaskForm";
 import TaskFormModal from "../components/TaskFormModal";
 
-import { ClipboardCheck, Plus, PlusCircle } from "lucide-react";
+import { ClipboardCheck } from "lucide-react";
 
 export default function Dashboard() {
   const { loading, data } = useQuery(QUERY_ME);
@@ -43,7 +43,6 @@ export default function Dashboard() {
   };
 
   const handleChangeStatus = async (taskId, newStatus) => {
-    console.log("handleChangeStatus", taskId, newStatus);
     try {
       const editedTask = await editTask({
         variables: { id: taskId, status: newStatus },
@@ -97,6 +96,11 @@ export default function Dashboard() {
         {loading ? (
           <div className="text-softgray font-body">Loading tasks...</div>
         ) : user?.username ? (<>
+         {(error || deleteError || editError) && (
+  <p className="mt-2 text-sm text-red-600 bg-red-100 border border-red-400 p-2 rounded-md">
+    ⚠️ Action failed: {error.message} {deleteError.message} {editError.message}
+  </p>
+)}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
             {tasks.map((task) => (
               <TaskCard
