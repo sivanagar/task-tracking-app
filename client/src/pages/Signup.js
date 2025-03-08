@@ -20,7 +20,6 @@ export default function Signup() {
       });
       Auth.login(data.register.token);
       //navigate to dashboard
-      window.location.href = "/dashboard";
 
     } catch (err) {
       console.error(err);
