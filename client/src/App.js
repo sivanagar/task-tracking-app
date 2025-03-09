@@ -16,7 +16,9 @@ import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 
 const httpLink = createHttpLink({
-  uri: "/graphql",
+  uri: process.env.REACT_APP_API_URL
+  
+
 });
 
 const authLink = setContext((_, { headers }) => {
