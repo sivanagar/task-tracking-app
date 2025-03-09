@@ -4,8 +4,11 @@ import { LOGIN_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
 import { Lock } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 export default function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -24,6 +27,9 @@ export default function Login() {
         variables: { email, password },
       });
       Auth.login(data.login.token);
+      if (data) {
+        navigate("/dashboard");
+      }
     } catch (err) {
       console.error(err);
     }

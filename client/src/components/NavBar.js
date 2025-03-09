@@ -3,11 +3,16 @@ import { Link } from "react-router-dom";
 import Auth from "../utils/auth";
 import { LogOut, ClipboardCheck } from "lucide-react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 function NavBar() {
+  const navigate = useNavigate();
+
   const logout = (event) => {
-    event.preventDefault();
+    
     Auth.logout();
+    navigate("/");
+
   };
 
   return (

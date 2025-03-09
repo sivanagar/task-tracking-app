@@ -2,6 +2,8 @@
 
 
 import {jwtDecode} from "jwt-decode";
+
+
 class AuthService
 {
     //get token
@@ -40,7 +42,8 @@ class AuthService
     login(token)
     {
         localStorage.setItem("id_token", token);
-        window.location.assign('/dashboard');
+        
+        // window.location.assign('/dashboard');
     }
 
     //logout
@@ -49,7 +52,7 @@ class AuthService
     {
         localStorage.removeItem("id_token");
         // this will reload the page and reset the state of the application
-    window.location.assign('/');
+    // window.location.assign('/');
     }
 }
 const authServiceInstance = new AuthService();

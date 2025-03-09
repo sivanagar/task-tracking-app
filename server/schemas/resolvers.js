@@ -54,7 +54,7 @@ const resolvers = {
 
     login: async (parent, { email, password }, context) => {
       console.log("login resolver");
-      const user = await User.findOne({ email });
+      const user = await User.findOne({ email }).populate("tasks");
 
       if (!user) {
         throw new AuthenticationError("Incorrect credentials");
@@ -65,10 +65,7 @@ const resolvers = {
       if (!validPassword) {
         throw new AuthenticationError("Incorrect credentials");
       }
-      console.log("user", user);
       const token = generateToken(user);
-      console.log("token", token);
-      // jwt.sign({ id: user._id }, process.env.JWT_SECRET,{expiresIn: "1d"});
       return { token, user };
     },
 

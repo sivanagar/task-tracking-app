@@ -4,8 +4,11 @@ import { REGISTER } from "../utils/mutations";
 import Auth from "../utils/auth";
 import { Link } from "react-router-dom";
 import { UserPlus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
 
 export default function Signup() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setusername] = useState("");
@@ -20,6 +23,9 @@ export default function Signup() {
       });
       Auth.login(data.register.token);
       //navigate to dashboard
+      if (data) {
+        navigate("/dashboard");
+      }
 
     } catch (err) {
       console.error(err);
