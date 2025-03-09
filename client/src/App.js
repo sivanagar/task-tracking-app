@@ -8,7 +8,6 @@ import { setContext } from "@apollo/client/link/context";
 import React from "react";
 
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import ErrorBoundary from "./components/ErrorBoundary";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
